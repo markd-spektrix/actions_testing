@@ -1,4 +1,5 @@
 name: Auto PR Commentor
+run-name: Adding Comments to PR
 on: 
     pull_request:
         types:
