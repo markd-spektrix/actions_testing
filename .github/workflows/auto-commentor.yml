@@ -37,6 +37,8 @@ jobs:
             NUMBER: ${{ github.event.pull_request.number }}
             REPO: ${{ github.repository }}
             BODY: >
+              _Pusher: @${{ github.actor }}, Workflow: `${{ github.workflow }}`_
+  
               #### Terraform Format and Style 🖌 `${{ steps.fmt.outcome }}`
 
               #### Terraform Initialization ⚙️`${{ steps.init.outcome }}`
@@ -48,12 +50,12 @@ jobs:
               <details><summary>Show Plan</summary> 
               \n
         
-              ```
+              \`\`\`
 
               ${{steps.plan.outputs.stdout}}              
               
-              ```
+              \`\`\`
         
               </details>
-              \n
-              _Pusher: @${{ github.actor }}, Workflow: `${{ github.workflow }}`_
+              
+              
