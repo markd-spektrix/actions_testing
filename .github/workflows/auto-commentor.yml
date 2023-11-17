@@ -1,10 +1,6 @@
 name: Auto PR Commentor
 run-name: Adding Comments to PR
-on: 
-    pull_request:
-        types:
-            - opened
-            - labeled
+on: pull_request
 jobs:
   add-comment:
     runs-on: ubuntu-latest
