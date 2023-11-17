@@ -18,6 +18,8 @@ jobs:
                 LOOK MA! I am a comment!
   terraform:
     runs-on: ubuntu-latest
+    permissions:
+        pull-requests: write
 
     steps:
       - uses: actions/checkout@v3
