@@ -46,7 +46,7 @@ jobs:
               #### Terraform Plan 📖`${{ steps.plan.outcome }}`
         
               <details><summary>Show Plan</summary> 
-              .
+              \n
         
               ```
 
@@ -55,5 +55,5 @@ jobs:
               ```
         
               </details>
-        
+              \n
               _Pusher: @${{ github.actor }}, Workflow: `${{ github.workflow }}`_
