@@ -45,10 +45,8 @@ jobs:
 
               <details><summary>Validation Output</summary>
       
-              ```
-              
+              ```\n
               ${{ steps.validate.outputs.stdout }}
-
               ```
         
               </details>
@@ -57,10 +55,8 @@ jobs:
         
               <details><summary>Show Plan</summary>
         
-              ```
-              
-              ${{steps.plan.outputs.stdout}}          
-              
+              ```\n              
+              ${{steps.plan.outputs.stdout}}              
               ```
         
               </details>
