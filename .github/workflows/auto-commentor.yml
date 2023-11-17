@@ -13,4 +13,7 @@ jobs:
         pull-requests: write
 
     steps:
-      - uses: markd-spektrix/composite_action@v1.2
+      - name: Add them comments
+        uses: markd-spektrix/composite_action@v1.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
