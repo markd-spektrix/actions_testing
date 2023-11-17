@@ -16,6 +16,11 @@ jobs:
             REPO: ${{ github.repository }}
             BODY: >
                 LOOK MA! I am a comment!
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
 
       - name: Terraform testing
         uses: hashicorp/setup-terraform@v2
