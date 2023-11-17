@@ -1,0 +1,21 @@
+name: Auto PR Commentor extra
+run-name: Adding Comments to PR extra
+on: 
+    pull_request:
+        types:
+            - opened
+jobs:
+  add-comment:
+    runs-on: ubuntu-latest
+    permissions:
+        pull-requests: write
+
+    steps:
+      - name: Add comment
+        run: gh pr comment "$NUMBER" --repo "$REPO" --body "$BODY"
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            NUMBER: ${{ github.event.pull_request.number }}
+            REPO: ${{ github.repository }}
+            BODY: >
+                LOOK MA! I am a unique comment!
