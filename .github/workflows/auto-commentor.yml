@@ -14,6 +14,6 @@ jobs:
 
     steps:
       - name: Add them comments
-        uses: markd-spektrix/composite_action@v1.2
+        uses: markd-spektrix/composite_action@v1.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
