@@ -16,9 +16,27 @@ jobs:
         uses: actions/github-script@v6
         with:
             script: |
-                console.log(github)
+                console.log(github.actor)
                 
                 console.log(context)
+        
+        continue-on-error: true
+
+      - name: "Approve pull request"
+        uses: "actions/github-script@v6"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pullRequest = context.payload.workflow_run.pull_requests[0]
+            const repository = context.repo
+
+            await github.rest.pulls.createReview({
+              event: "APPROVE",
+              owner: repository.owner,
+              repo: repository.repo,
+              pull_number: pullRequest.number,
+            })
+
 
     
     #   - name: Terraform fmt
