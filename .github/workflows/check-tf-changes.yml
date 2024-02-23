@@ -34,10 +34,9 @@ jobs:
         id: change_check        
         shell: pwsh
         env:
-          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+          PLAN: ${{ steps.plan.outputs.stdout }}
         run: |
-            $doop = ${{ steps.plan.outputs.stdout }}
-            echo $doop
+            echo $env:PLAN
             if ( ($dopop).Contains("No changes. Your infrastructure matches the configuration.")) {
                 echo "No Changes Planned -- Auto merge & Deploy"
             }
