@@ -33,9 +33,10 @@ jobs:
       - name: Check TF Changes
         id: change_check        
         shell: pwsh
+        env:
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         run: |
-            echo ${{ steps.plan.outputs.stdout }}
-            if ( (${{ steps.plan.outputs.stdout }}).Contains("No changes. Your infrastructure matches the configuration.")) {
+            if ( ($env.PLAN).Contains("No changes. Your infrastructure matches the configuration.")) {
                 echo "No Changes Planned -- Auto merge & Deploy"
             }
             else {
