@@ -35,7 +35,7 @@ jobs:
         shell: pwsh
         run: |
             echo ${{ steps.plan.outputs.stdout }}
-            if ( ${{ steps.plan.outputs.stdout }}.Contains("No changes. Your infrastructure matches the configuration.")) {
+            if ( (${{ steps.plan.outputs.stdout }}).Contains("No changes. Your infrastructure matches the configuration.")) {
                 echo "No Changes Planned -- Auto merge & Deploy"
             }
             else {
