@@ -25,8 +25,17 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const pullRequest = context.payload.pull_requests
             const repository = context.repo
-            console.log(repository)
+            console.log(pullRequest)
+
+            await github.rest.pulls.createReview({
+              event: "APPROVE",
+              owner: repository.owner,
+              repo: repository.repo,
+              pull_number: pullRequest.number,
+            })
+
     
     #   - name: Terraform fmt
     #     id: fmt
