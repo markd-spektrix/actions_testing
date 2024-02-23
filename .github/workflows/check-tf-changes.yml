@@ -31,7 +31,8 @@ jobs:
         continue-on-error: true
         
       - name: Check TF Changes
-        id: change_check
+        id: change_check        
+        shell: pwsh
         run: |
             if ( $PLAN.Contains("No changes. Your infrastructure matches the configuration.")) {
                 echo "No Changes Planned -- Auto merge & Deploy"
