@@ -25,7 +25,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const pullRequest = context.payload.pull_requests
+            const pullRequest = context.payload.pull_request
             const repository = context.repo
             console.log(pullRequest)
 
