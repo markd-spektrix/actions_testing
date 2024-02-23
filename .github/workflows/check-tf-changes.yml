@@ -26,7 +26,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const repository = context.repo
-            echo repository
+            console.log(repository)
     
     #   - name: Terraform fmt
     #     id: fmt
