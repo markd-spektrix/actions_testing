@@ -39,14 +39,14 @@ jobs:
       - name: Fake Check TFPlan
         id: check_tf
         shell: pwsh
-        run: echo "random-id=$(echo $TRUE)" >> $GITHUB_OUTPUT
+        run: echo "random-id=$(echo $FALSE)" >> $GITHUB_OUTPUT
 
       - name: Fake Conditional Approve
         id: approve
         if: ${{ steps.check_tf.outputs.random-id }} == '$TRUE'
 
         shell: pwsh
-        run: echo  ${{ steps.check_tf.outputs.random-id }}
+        run: echo  "${{ steps.check_tf.outputs.random-id }}"
     #   - name: Terraform fmt
     #     id: fmt
     #     run: terraform fmt -check
