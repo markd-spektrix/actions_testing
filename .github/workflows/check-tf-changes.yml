@@ -26,14 +26,15 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const repository = context.repo
-            const pullRequest = context.payload.workflow_run.pull_requests[0]
+            echo repository
+            # const pullRequest = context.payload.workflow_run.pull_requests[0]
 
-            await github.rest.pulls.createReview({
-              event: "APPROVE",
-              owner: repository.owner,
-              repo: repository.repo,
-              pull_number: pullRequest.number,
-            })
+            # await github.rest.pulls.createReview({
+            #   event: "APPROVE",
+            #   owner: repository.owner,
+            #   repo: repository.repo,
+            #   pull_number: pullRequest.number,
+            # })
 
 
     
