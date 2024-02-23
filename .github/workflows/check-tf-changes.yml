@@ -12,38 +12,47 @@ jobs:
       
       - uses: hashicorp/setup-terraform@v2
       
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt -check
-        continue-on-error: true
-      
-      - name: Terraform Init
-        id: init
-        run: terraform init
-      
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
-      
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -no-color
-        continue-on-error: true
-        
-      - name: Check TF Changes
-        if: github.event_name == 'pull_request'
-        id: change_check        
-        shell: pwsh
-        env:
-          PLAN: ${{ steps.plan.outputs.stdout }}
-        run: |
-            if ( $env:PLAN.Contains("No changes. Your infrastructure matches the configuration.")) {
-                echo "No Changes Planned -- Auto merge & Deploy"
-            }
-            else {
-                echo "Changes planned -- Check it!"
-            }
       - name: View context attributes
         uses: actions/github-script@v6
         with:
-            script: console.log(context)
+            script: |
+                console.log(github)
+                
+                console.log(context)
+
+    
+    #   - name: Terraform fmt
+    #     id: fmt
+    #     run: terraform fmt -check
+    #     continue-on-error: true
+      
+    #   - name: Terraform Init
+    #     id: init
+    #     run: terraform init
+      
+    #   - name: Terraform Validate
+    #     id: validate
+    #     run: terraform validate -no-color
+      
+    #   - name: Terraform Plan
+    #     id: plan
+    #     run: terraform plan -no-color
+    #     continue-on-error: true
+        
+    #   - name: Check TF Changes
+    #     if: github.event_name == 'pull_request'
+    #     id: change_check        
+    #     shell: pwsh
+    #     env:
+    #       PLAN: ${{ steps.plan.outputs.stdout }}
+    #     run: |
+    #         if ( $env:PLAN.Contains("No changes. Your infrastructure matches the configuration.")) {
+    #             echo "No Changes Planned -- Auto merge & Deploy"
+    #         }
+    #         else {
+    #             echo "Changes planned -- Check it!"
+    #         }
+    #   - name: View context attributes
+    #     uses: actions/github-script@v6
+    #     with:
+    #         script: console.log(context)
