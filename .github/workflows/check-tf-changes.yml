@@ -12,34 +12,14 @@ jobs:
       
       - uses: hashicorp/setup-terraform@v2
       
-      - name: View context attributes
-        uses: actions/github-script@v6
-        with:
-            script: |
-                console.log(context)
-        
-        continue-on-error: true
+    #   - name: View context attributes
+    #     uses: actions/github-script@v6
+    #     with:
+    #         script: |
+    #             console.log(context)
+       
+    #     continue-on-error: true
 
-      - name: "Approve pull request"
-        uses: "actions/github-script@v6"
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const pullRequest = context.payload.pull_request
-            const repository = context.repo
-            console.log(pullRequest)
-
-            await github.rest.pulls.createReview({
-              event: "APPROVE",
-              owner: repository.owner,
-              repo: repository.repo,
-              pull_number: pullRequest.number,
-            })
-
-      - name: Fake Check TFPlan
-        id: check_tf
-        shell: pwsh
-        run: echo "random-id=$FALSE" >> $GITHUB_OUTPUT
 
     #   - name: Terraform fmt
     #     id: fmt
@@ -60,12 +40,24 @@ jobs:
         continue-on-error: true
 
         
-      - name: Fake Conditional Approve
-        id: approve
+      - name: "Approve pull request"
+        uses: "actions/github-script@v6"
         if: ${{ contains( steps.plan.outputs.stdout , 'No changes. Your infrastructure matches the configuration.') }}
 
-        shell: pwsh
-        run: echo "LET'S MERGE THIS!"
+        with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            script: |
+                const pullRequest = context.payload.pull_request
+                const repository = context.repo
+                console.log(pullRequest)
+
+                await github.rest.pulls.createReview({
+                    event: "APPROVE",
+                    owner: repository.owner,
+                    repo: repository.repo,
+                    pull_number: pullRequest.number,
+                })
+
     #   - name: Check TF Changes
     #     if: github.event_name == 'pull_request'
     #     id: change_check        
