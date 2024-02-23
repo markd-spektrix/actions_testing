@@ -41,30 +41,31 @@ jobs:
         shell: pwsh
         run: echo "random-id=$FALSE" >> $GITHUB_OUTPUT
 
-      - name: Fake Conditional Approve
-        id: approve
-        if: ${{ steps.check_tf.outputs.random-id }} == '$TRUE'
-
-        shell: pwsh
-        run: echo  ${{ steps.check_tf.outputs.random-id }}
     #   - name: Terraform fmt
     #     id: fmt
     #     run: terraform fmt -check
     #     continue-on-error: true
       
-    #   - name: Terraform Init
-    #     id: init
-    #     run: terraform init
+      - name: Terraform Init
+        id: init
+        run: terraform init
       
-    #   - name: Terraform Validate
-    #     id: validate
-    #     run: terraform validate -no-color
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
       
-    #   - name: Terraform Plan
-    #     id: plan
-    #     run: terraform plan -no-color
-    #     continue-on-error: true
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
+
         
+      - name: Fake Conditional Approve
+        id: approve
+        if: contains(${{ steps.plan.outputs.stdout }}, 'No changes. Your infrastructure matches the configuration.')
+
+        shell: pwsh
+        run: echo "HWLLOE"
     #   - name: Check TF Changes
     #     if: github.event_name == 'pull_request'
     #     id: change_check        
