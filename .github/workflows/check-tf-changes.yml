@@ -39,7 +39,7 @@ jobs:
       - name: Fake Check TFPlan
         id: check_tf
         shell: pwsh
-        run: echo "random-id=$(echo $FALSE)" >> $GITHUB_OUTPUT
+        run: echo "random-id=$FALSE" >> $GITHUB_OUTPUT
 
       - name: Fake Conditional Approve
         id: approve
