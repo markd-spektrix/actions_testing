@@ -62,7 +62,7 @@ jobs:
         
       - name: Fake Conditional Approve
         id: approve
-        if: contains(${{ steps.plan.outputs.stdout }}, 'No changes. Your infrastructure matches the configuration.')
+        if: contains(${{ steps.plan.outputs.stdout }}, 'LOOK MA, ITS FAKE.')
 
         shell: pwsh
         run: echo "HWLLOE"
