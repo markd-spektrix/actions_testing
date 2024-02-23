@@ -46,7 +46,7 @@ jobs:
         if: ${{ steps.check_tf.outputs.random-id }} == '$TRUE'
 
         shell: pwsh
-        run: echo  "${{ steps.check_tf.outputs.random-id }}"
+        run: echo  "${{ steps.check_tf.outputs }}"
     #   - name: Terraform fmt
     #     id: fmt
     #     run: terraform fmt -check
