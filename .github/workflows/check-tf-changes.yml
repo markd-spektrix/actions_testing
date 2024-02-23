@@ -1,0 +1,92 @@
+name: Check If TF Changes
+run-name: Checking TF Changes
+on: pull_request
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: hashicorp/setup-terraform@v2
+      
+    #   - name: View context attributes
+    #     uses: actions/github-script@v6
+    #     with:
+    #         script: |
+    #             console.log(context)
+       
+    #     continue-on-error: true
+
+
+    #   - name: Terraform fmt
+    #     id: fmt
+    #     run: terraform fmt -check
+    #     continue-on-error: true
+      
+      - name: Terraform Init
+        id: init
+        run: terraform init
+      
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+      
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
+
+        
+      - name: Approve Pull Request
+        uses: "actions/github-script@v6"
+        if: ${{ contains( steps.plan.outputs.stdout , 'No changes. Your infrastructure matches the configuration.') }}
+
+        with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            script: |
+                const pullRequest = context.payload.pull_request
+                const repository = context.repo
+
+                await github.rest.pulls.createReview({
+                    event: "APPROVE",
+                    owner: repository.owner,
+                    repo: repository.repo,
+                    pull_number: pullRequest.number,
+                })
+
+      - name: Merge pull request
+        uses: "actions/github-script@v6"
+        if: ${{ contains( steps.plan.outputs.stdout , 'No changes. Your infrastructure matches the configuration.') }}
+
+        with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            script: |
+                const pullRequest = context.payload.pull_request
+                const repository = context.repo
+
+                await github.rest.pulls.merge({
+                    merge_method: "squash",
+                    owner: repository.owner,
+                    pull_number: pullRequest.number,
+                    repo: repository.repo,
+                })
+            
+    #   - name: Check TF Changes
+    #     if: github.event_name == 'pull_request'
+    #     id: change_check        
+    #     shell: pwsh
+    #     env:
+    #       PLAN: ${{ steps.plan.outputs.stdout }}
+    #     run: |
+    #         if ( $env:PLAN.Contains("No changes. Your infrastructure matches the configuration.")) {
+    #             echo "No Changes Planned -- Auto merge & Deploy"
+    #         }
+    #         else {
+    #             echo "Changes planned -- Check it!"
+    #         }
+    #   - name: View context attributes
+    #     uses: actions/github-script@v6
+    #     with:
+    #         script: console.log(context)
